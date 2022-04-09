@@ -1664,7 +1664,7 @@ warn_for_unused_label (tree label)
   if (!TREE_USED (label))
     {
       if (DECL_INITIAL (label))
-	warning (OPT_Wunused_label, "\n==========================Misra-c 2012 rule violation:2.6==========================\nRule 2.6 A function should not contain unused label declarations\nCategory: Advisory\nlabel %q+D defined but not used", label);
+	warning (OPT_Wmisra_c, "Misra-c Rule 2.6\nlabel %q+D defined but not used", label);
       else
 	warning (OPT_Wunused_label, "label %q+D declared but not defined", label);
     }
@@ -1932,9 +1932,12 @@ do_warn_unused_parameter (tree fn)
        decl; decl = DECL_CHAIN (decl))
     if (!TREE_USED (decl) && TREE_CODE (decl) == PARM_DECL
 	&& DECL_NAME (decl) && !DECL_ARTIFICIAL (decl)
-	&& !TREE_NO_WARNING (decl))
+	&& !TREE_NO_WARNING (decl)) {
       warning_at (DECL_SOURCE_LOCATION (decl), OPT_Wunused_parameter,
 		  "unused parameter %qD", decl);
+      warning_at (DECL_SOURCE_LOCATION (decl), OPT_Wmisra_c,
+                  "Misra-C Rule 2.7\nunused parameter %qD", decl);
+    }
 }
 
 /* If DECL is a typedef that is declared in the current function,
